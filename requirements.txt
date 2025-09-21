@@ -1,4 +1,4 @@
-streamlit == 1.46.1
+streamlit==1.46.1
 torch==2.8.0+cu129
 torchvision==0.23.0+cu129
 pillow==10.2.0
