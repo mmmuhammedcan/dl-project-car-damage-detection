@@ -1,5 +1,6 @@
 # Vehicle Damage Detection (Streamlit + PyTorch)
 
+> **Live Demo:** [Click here to test the application](https://dl-project-car-damage-detection-gt7hh26vbdadrldftpd7p7.streamlit.app/)
 A simple web app that classifies vehicle damage from a single image using a fine‑tuned ResNet‑50 model.  
 It predicts one of six classes:
 - **Front Breakage**
