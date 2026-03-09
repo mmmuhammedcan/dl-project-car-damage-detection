@@ -20,7 +20,7 @@ class CarClassifierResNet(nn.Module):
         
         in_features = self.model.fc.in_features
         
-        self.model.fc = nn.Sequential(
+        self.model.classifier = nn.Sequential(
             nn.Dropout(0.2),
             nn.Linear(in_features, num_classes)
         )
