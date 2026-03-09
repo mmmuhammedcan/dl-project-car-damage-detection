@@ -20,7 +20,7 @@ class CarClassifierResNet(nn.Module):
         
         in_features = self.model.fc.in_features
         
-        self.model.classifier = nn.Sequential(
+        self.model.fc = nn.Sequential(
             nn.Dropout(0.2),
             nn.Linear(in_features, num_classes)
         )
@@ -40,7 +40,8 @@ def predict(image_path):
     global trained_model
     if trained_model is None:
         trained_model = CarClassifierResNet()
-        trained_model.load_state_dict(torch.load("model/saved_model.pth"))
+        state_dict = torch.load("model/saved_model.pth", map_location=torch.device('cpu'), weights_only=False)
+        trained_model.load_state_dict(state_dict)
         trained_model.eval()
     
     
