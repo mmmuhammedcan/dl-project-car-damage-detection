@@ -1,0 +1,76 @@
+{
+  "class_names": [
+    "F_Breakage",
+    "F_Crushed",
+    "F_Normal",
+    "R_Breakage",
+    "R_Crushed",
+    "R_Normal"
+  ],
+  "split_sizes": {
+    "train": 1610,
+    "val": 345,
+    "test": 345
+  },
+  "test_accuracy": 0.7971014492753623,
+  "test_macro_f1": 0.7799724330156855,
+  "classification_report": "              precision    recall  f1-score   support\n\n  F_Breakage      0.775     0.920     0.841        75\n   F_Crushed      0.793     0.767     0.780        60\n    F_Normal      0.955     0.840     0.894        75\n  R_Breakage      0.833     0.556     0.667        45\n   R_Crushed      0.640     0.711     0.674        45\n    R_Normal      0.769     0.889     0.825        45\n\n    accuracy                          0.797       345\n   macro avg      0.794     0.780     0.780       345\nweighted avg      0.806     0.797     0.795       345\n",
+  "confusion_matrix": [
+    [
+      69,
+      5,
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      12,
+      46,
+      2,
+      0,
+      0,
+      0
+    ],
+    [
+      6,
+      6,
+      63,
+      0,
+      0,
+      0
+    ],
+    [
+      2,
+      1,
+      0,
+      25,
+      13,
+      4
+    ],
+    [
+      0,
+      0,
+      0,
+      5,
+      32,
+      8
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      5,
+      40
+    ]
+  ],
+  "best_val_macro_f1": 0.8326090173186361,
+  "hyperparameters": {
+    "lr": 0.005,
+    "dropout": 0.2,
+    "epochs": 15,
+    "batch_size": 32,
+    "seed": 42
+  }
+}

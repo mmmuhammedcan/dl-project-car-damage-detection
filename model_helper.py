@@ -19,8 +19,8 @@ class CarClassifierResNet(nn.Module):
             param.requires_grad = True
         
         in_features = self.model.fc.in_features
-        
-        self.model.classifier = nn.Sequential(
+
+        self.model.fc = nn.Sequential(
             nn.Dropout(0.2),
             nn.Linear(in_features, num_classes)
         )

@@ -32,6 +32,10 @@ It predicts one of six classes:
 ├── model/ # Put your model weights here (saved_model.pth)
 ├── front_crushed.png # Screenshot for README
 ├── requirements.txt # Dependencies
+├── training/
+│   ├── train.py # Training script (stratified split, real held-out test set)
+│   ├── eval_results.json # Test-set metrics for the current model/saved_model.pth
+│   └── confusion_matrix.png
 └── README.md
 ```
 
@@ -95,14 +99,29 @@ Then open the printed local URL in your browser (usually `http://localhost:8501`
 
 ---
 
-## 📦 Dataset & Training (notes to future readers)
-This repository focuses on **inference**. To reproduce training:
-- Prepare a labeled dataset with the six classes listed above.
-- Start from ResNet‑50 with pretrained ImageNet weights.
-- Freeze earlier layers; unfreeze `layer4` and the classifier head.
-- Use standard augmentations (random crop/flip, color jitter, etc.).
-- Train with Cross‑Entropy Loss; evaluate by accuracy, F1, and confusion matrices.
-- Save the final weights to `model/saved_model.pth`.
+## 📦 Dataset & Training
+
+- **Dataset:** 2,301 labeled images across the six classes (`F_Breakage` 500, `F_Crushed` 400, `F_Normal` 500, `R_Breakage` 300, `R_Crushed` 301, `R_Normal` 300).
+- **Split:** stratified 70/15/15 train/val/test (`training/train.py`), seeded for reproducibility. The test set is held out and never used for training or model selection.
+- **Augmentation (train only):** random horizontal flip, random rotation (±10°), color jitter.
+- **Training:** ResNet‑50 backbone, `layer4` + classification head fine‑tuned, Adam (`lr=0.005`), 15 epochs, checkpoint selected by best validation macro‑F1.
+
+### Test set results (n=345, held out)
+
+| class | precision | recall | f1-score |
+|---|---|---|---|
+| Front Breakage | 0.775 | 0.920 | 0.841 |
+| Front Crushed | 0.793 | 0.767 | 0.780 |
+| Front Normal | 0.955 | 0.840 | 0.894 |
+| Rear Breakage | 0.833 | 0.556 | 0.667 |
+| Rear Crushed | 0.640 | 0.711 | 0.674 |
+| Rear Normal | 0.769 | 0.889 | 0.825 |
+
+**Accuracy: 79.7% · Macro-F1: 78.0%**
+
+Rear Breakage/Rear Crushed are the main confusion pair — visually similar damage types with fewer training examples (300–301 images vs. 400–500 for front classes). See `training/confusion_matrix.png` for the full matrix.
+
+To reproduce: `cd training && python train.py` (expects `../dataset/<class_name>/*.jpg`, ImageFolder layout).
 
 ---
 
